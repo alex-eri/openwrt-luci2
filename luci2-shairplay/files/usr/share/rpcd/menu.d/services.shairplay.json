@@ -1,0 +1,11 @@
+{
+	"services": {
+		"title": "Services",
+		"index": 40
+	},
+	"services/shairplay": {
+		"title": "shairplay",
+		"acls": [ "shairplay" ],
+		"view": "services/shairplay"
+	}
+}

@@ -1,0 +1,15 @@
+{
+	"shairplay": {
+		"description": "Shairplay management",
+		"read": {
+			"uci": [
+				"shairplay"
+			]
+		},
+		"write": {
+			"uci": [
+				"shairplay"
+			]
+		}
+	}
+}
