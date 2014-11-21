@@ -324,7 +324,7 @@ L.ui.view.extend({
 
 							if (ports[j].link)
 							{
-								i = '/icons/port_up.png');
+								i = '/icons/port_up.png';
 								s = '%dbaseT'.format(ports[j].speed);
 								d = ports[j].full_duplex ? L.tr('Full-duplex') : L.tr('Half-duplex');
 							}
