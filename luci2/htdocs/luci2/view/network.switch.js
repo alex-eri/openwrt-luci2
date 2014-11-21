@@ -318,17 +318,19 @@ L.ui.view.extend({
 					return self.getSwitchStatus(swname).then(function(ports) {
 						for (var j = 0; j < ports.length; j++)
 						{
+							var i = '/icons/port_down.png';
 							var s = L.tr('No link');
 							var d = '&#160;';
 
 							if (ports[j].link)
 							{
+								i = '/icons/port_up.png');
 								s = '%dbaseT'.format(ports[j].speed);
 								d = ports[j].full_duplex ? L.tr('Full-duplex') : L.tr('Half-duplex');
 							}
 
 							$('#portstatus-%s-%d'.format(swname, j))
-								.empty().append(s + '<br />' + d);
+								.empty().append($('<img />').attr('src', L.globals.resource + i)).append('<br />' + s + '<br />' + d);
 						}
 					});
 				}, 5000);
