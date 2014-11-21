@@ -9,7 +9,7 @@ define Package/luci2-p910nd
   SECTION:=luci2
   CATEGORY:=LuCI2
   TITLE:=LuCI2 p910nd module
-  DEPENDS:=luci2 p910nd
+  DEPENDS:=luci2 +p910nd
 endef
 
 define Package/luci2-p910nd/description
