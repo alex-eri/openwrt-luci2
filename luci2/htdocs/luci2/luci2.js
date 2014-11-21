@@ -5190,13 +5190,15 @@ function LuCI2()
 			{
 				delete validation.message;
 
-				if ((val.length == 0 && !d.opt))
-				{
-					rv = d.self.setError($elem, L.tr('Field must not be empty'));
-				}
-				else if (val.length > 0 && !vstack[0].apply(val, vstack[1]))
-				{
-					rv = d.self.setError($elem, validation.message, vstack[1]);
+				if (val) {
+					if ((val.length == 0 && !d.opt))
+					{
+						rv = d.self.setError($elem, L.tr('Field must not be empty'));
+					}
+					else if (val.length > 0 && !vstack[0].apply(val, vstack[1]))
+					{
+						rv = d.self.setError($elem, validation.message, vstack[1]);
+					}
 				}
 				else
 				{
