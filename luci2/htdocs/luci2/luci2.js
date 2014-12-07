@@ -687,40 +687,44 @@ function LuCI2()
 					throw 'No related request for JSON response';
 
 				/* fetch response attribute and verify returned type */
-				var ret = undefined;
+				var rets = [];
 
 				/* verify message frame */
 				if (typeof(msg[i]) == 'object' && msg[i].jsonrpc == '2.0')
 					if ($.isArray(msg[i].result) && msg[i].result[0] == 0)
 						rets = (msg[i].result.length > 1) ? msg[i].result.slice(1) : msg[i].result;
-                for (var ret in rets) {
-				    if (req.expect)
-				    {
-					    for (var key in req.expect)
-					    {
-						    if (typeof(ret) != 'undefined' && key != '')
-							    ret = ret[key];
 
-						    if (typeof(ret) == 'undefined' || type.call(ret) != type.call(req.expect[key]))
-							    ret = req.expect[key];
+                for (var ret_i in rets) {
+                var ret = rets[ret_i];
+				if (req.expect)
+				{
+					for (var key in req.expect)
+					{
+						if (typeof(ret) != 'undefined' && key != '')
+							ret = ret[key];
 
-						    break;
-					    }
-				    }
+						if (typeof(ret) == 'undefined' || type.call(ret) != type.call(req.expect[key]))
+							ret = req.expect[key];
 
-				    /* apply filter */
-				    if (typeof(req.filter) == 'function')
-				    {
-					    req.priv[0] = ret;
-					    req.priv[1] = req.params;
-					    ret = req.filter.apply(L.rpc, req.priv);
-				    }
+						break;
+					}
+				}
 
-				    /* store response data */
-				    if (typeof(req.index) == 'number')
-					    data[req.index] = ret;
-				    else
-					    data.push(ret);
+				/* apply filter */
+				if (typeof(req.filter) == 'function')
+				{
+					req.priv[0] = ret;
+					req.priv[1] = req.params;
+					ret = req.filter.apply(L.rpc, req.priv);
+				}
+
+				/* store response data */
+				if (typeof(req.index) == 'number')
+					data[req.index] = ret;
+				else if (req.array)
+				    data[i] = ret;
+				else
+					data = ret;
                 }
 				/* delete request object */
 				delete L.rpc._requests[reqs[i].id];
