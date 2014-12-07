@@ -687,15 +687,22 @@ function LuCI2()
 					throw 'No related request for JSON response';
 
 				/* fetch response attribute and verify returned type */
-				var rets = [];
-
+				var ret = undefined;
+                
+                if (req.array) {
+                    console.log('arr');
+    				if (typeof(msg[i]) == 'object' && msg[i].jsonrpc == '2.0')
+					    if ($.isArray(msg[i].result) && msg[i].result[0] == 0) {
+					    	ret = (msg[i].result.length > 1) ? msg[i].slice(1) : msg[i].result;
+					    	data = ret;
+					    	}
+                
+                } else {
 				/* verify message frame */
 				if (typeof(msg[i]) == 'object' && msg[i].jsonrpc == '2.0')
 					if ($.isArray(msg[i].result) && msg[i].result[0] == 0)
-						rets = (msg[i].result.length > 1) ? msg[i].result.slice(1) : msg[i].result;
+						ret = (msg[i].result.length > 1) ? msg[i].result[1] : msg[i].result[0];
 
-                for (var ret_i in rets) {
-                var ret = rets[ret_i];
 				if (req.expect)
 				{
 					for (var key in req.expect)
@@ -721,8 +728,6 @@ function LuCI2()
 				/* store response data */
 				if (typeof(req.index) == 'number')
 					data[req.index] = ret;
-				else if (req.array)
-				    data[i] = ret;
 				else
 					data = ret;
                 }
