@@ -689,11 +689,11 @@ function LuCI2()
 				/* fetch response attribute and verify returned type */
 				var ret = undefined;
                 
-                if (req.array) {
+                if (req.expect && req.expect == 'array') {
                     console.log('arr');
     				if (typeof(msg[i]) == 'object' && msg[i].jsonrpc == '2.0')
 					    if ($.isArray(msg[i].result) && msg[i].result[0] == 0) {
-					    	ret = (msg[i].result.length > 1) ? msg[i].slice(1) : msg[i].result;
+					    	ret = (msg[i].result.length > 1) ? msg[i].result.slice(1) : msg[i].result;
 					    	data = ret;
 					    	}
                 
